@@ -1,6 +1,9 @@
 <?php
 
-use Performance\ExampleCommand;
+use D2\Hydrator\Hydrator;
+use Performance\User;
+use Performance\UserAddress;
+use Performance\UserPreferences;
 
 $autoload = __DIR__.'/../vendor/autoload.php';
 
@@ -13,24 +16,62 @@ require_once $autoload;
 $started = hrtime(true);
 
 $build = function() {
-    // test code
+
+    $dbRow = [
+        'id'                             => 1,
+        'name'                           => 'Ivan',
+        'email'                          => 'ivan@ivan.ru',
+        'created_at'                     => '1970-01-01 00:00:00',
+        'address_country'                => 'Russia',
+        'address_city'                   => 'Moscow',
+        'address_street'                 => 'Krasnaya',
+        'address_house'                  => '1',
+        'address_flat'                   => null,
+        'address_zip_code'               => 100000,
+        'preferences_locale'             => 'ru_RU',
+        'preferences_language'           => 'ru',
+        'preferences_timezone'           => 'utc',
+        'preferences_theme'              => 'light',
+        'preferences_subscribe_news'     => false,
+        'preferences_subscribe_messages' => true,
+        'field0'                         => 'text',
+        'field1'                         => 'text',
+        'field2'                         => 'text',
+        'field3'                         => 'text',
+        'field4'                         => 'text',
+        'field5'                         => 'text',
+    ];
+
+    // $dbRow['address']     = Hydrator::hydrate(UserAddress::class, $dbRow, 'address');
+    // $dbRow['preferences'] = Hydrator::hydrate(UserPreferences::class, $dbRow, 'preferences');
+
+    // return Hydrator::hydrate(User::class, $dbRow);
+
+    $hydrator = new Hydrator(User::class);
+    $hydrator->addPrefix('address', UserAddress::class);
+    $hydrator->addPrefix('preferences', UserPreferences::class);
+
+    return $hydrator->hydrate($dbRow);
 };
 
 for ($i = 1; $i <= 1000; $i++) {
-    $build();
-    if ($i === 2) {
+    $user = $build();
+
+dd($user);
+
+    if ($i == 2) {
         $finished2 = hrtime(true);
     }
-    if ($i === 5) {
+    if ($i == 5) {
         $finished5 = hrtime(true);
     }
-    if ($i === 10) {
+    if ($i == 10) {
         $finished10 = hrtime(true);
     }
-    if ($i === 25) {
+    if ($i == 25) {
         $finished25 = hrtime(true);
     }
-    if ($i === 100) {
+    if ($i == 100) {
         $finished100 = hrtime(true);
     }
 }
