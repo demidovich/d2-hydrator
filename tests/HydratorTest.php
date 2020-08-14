@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Tests\Stub\EntityAddress;
 use Tests\Stub\Example;
 use Tests\Stub\ExampleEnum;
+use Tests\Stub\ExampleId;
 
 class CommandTest extends TestCase
 {
@@ -17,8 +18,6 @@ class CommandTest extends TestCase
             'id' => 1,
             'primitive_id' => 2,
             'primitive_string' => 'mystring',
-            'datetime' => '2020-01-01 00:00:00',
-            'enum' => 'example_status',
         ];
 
         $hydrator = new Hydrator(Example::class);
@@ -28,24 +27,26 @@ class CommandTest extends TestCase
         $this->assertNotEmpty($entity);
         $this->assertInstanceOf(Example::class, $entity);
 
-        // $this->assertEquals(100, $entity->integer);
-        // $this->assertEquals('mystring', $entity->string);
-        // $this->assertInstanceOf(\DateTimeImmutable::class, $entity->datetime);
-        // $this->assertInstanceOf(ExampleEnum::class, $entity->enum);
-        // $this->assertEquals('example_status', $entity->enum->value());
+        $this->assertInstanceOf(ExampleId::class, $entity->id);
+        $this->assertEquals($data['id'], $entity->id->toPrimitive());
+
+        $this->assertEquals($data['primitive_id'], $entity->primitive_id);
+        $this->assertEquals($data['primitive_string'], $entity->primitive_string);
     }
 
-    // public function test_missing_param_exception()
-    // {
-    //     $this->expectException(Exception::class);
+    public function test_missing_param_exception()
+    {
+        $this->expectException(Exception::class);
 
-    //     $data = [
-    //         'integer__' => 100,   
-    //         'string' => 'mystring',
-    //         'datetime' => '2020-01-01 00:00:00',
-    //         'enum' => 'example_status',
-    //     ];
+        $data = [
+            'integer__' => 100,   
+            'string' => 'mystring',
+            'datetime' => '2020-01-01 00:00:00',
+            'enum' => 'example_status',
+        ];
 
-    //     Hydrator::hydrate(Example::class, $data);
-    // }
+        $hydrator = new Hydrator(Example::class);
+        $hydrator->addPrefix('address', EntityAddress::class);
+        $entity = $hydrator->hydrate($data);
+    }
 }

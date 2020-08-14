@@ -24,8 +24,12 @@ class Hydrator
 
     public function hydrate(array $data)
     {
-        $instance    = new $this->class;
-        $reflection  = new ReflectionClass($instance);
+        // $instance    = new $this->class;
+        // $reflection  = new ReflectionClass($instance);
+        // $data       += $reflection->getDefaultProperties();
+
+        $reflection  = new ReflectionClass($this->class);
+        $instance    = $reflection->newInstanceWithoutConstructor();
         $data       += $reflection->getDefaultProperties();
 
         foreach ($reflection->getProperties() as $property) {

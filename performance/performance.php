@@ -56,9 +56,6 @@ $build = function() {
 
 for ($i = 1; $i <= 1000; $i++) {
     $user = $build();
-
-dd($user);
-
     if ($i == 2) {
         $finished2 = hrtime(true);
     }
