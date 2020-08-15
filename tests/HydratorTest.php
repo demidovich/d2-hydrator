@@ -2,12 +2,12 @@
 
 namespace Tests;
 
+use ArgumentCountError;
 use D2\Hydrator\Hydrator;
-use Exception;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Tests\Stub\EntityAddress;
 use Tests\Stub\Example;
-use Tests\Stub\ExampleEnum;
 use Tests\Stub\ExampleId;
 
 class CommandTest extends TestCase
@@ -34,15 +34,29 @@ class CommandTest extends TestCase
         $this->assertEquals($data['primitive_string'], $entity->primitive_string);
     }
 
-    public function test_missing_param_exception()
+    public function test_value_object_construct_exception()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(ArgumentCountError::class);
 
         $data = [
-            'integer__' => 100,   
-            'string' => 'mystring',
-            'datetime' => '2020-01-01 00:00:00',
-            'enum' => 'example_status',
+            //'id' => 1,
+            'primitive_id' => 2,
+            'primitive_string' => 'mystring',
+        ];
+
+        $hydrator = new Hydrator(Example::class);
+        $hydrator->addPrefix('address', EntityAddress::class);
+        $entity = $hydrator->hydrate($data);
+    }
+
+    public function test_missing_primitive_exception()
+    {
+        $this->expectException(RuntimeException::class);
+
+        $data = [
+            'id' => 1,
+            'primitive_id' => 2,
+            //'primitive_string' => 'mystring',
         ];
 
         $hydrator = new Hydrator(Example::class);

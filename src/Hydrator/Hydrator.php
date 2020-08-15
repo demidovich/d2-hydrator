@@ -24,13 +24,18 @@ class Hydrator
 
     public function hydrate(array $data)
     {
-        // $instance    = new $this->class;
-        // $reflection  = new ReflectionClass($instance);
-        // $data       += $reflection->getDefaultProperties();
-
-        $reflection  = new ReflectionClass($this->class);
-        $instance    = $reflection->newInstanceWithoutConstructor();
+        $instance    = new $this->class;
+        $reflection  = new ReflectionClass($instance);
         $data       += $reflection->getDefaultProperties();
+
+        // try {
+        //     $instance    = new $this->class;
+        //     $reflection  = new ReflectionClass($instance);
+        //     $data       += $reflection->getDefaultProperties();
+        // } catch(ArgumentCountError $e) {
+        // } finally {
+        //     throw new RuntimeException("The hydrating class \"{$this->class}\" cannot have a constructor.");
+        // }
 
         foreach ($reflection->getProperties() as $property) {
 
