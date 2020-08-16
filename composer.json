@@ -27,6 +27,12 @@
         "squizlabs/php_codesniffer": "^3.5",
         "symfony/var-dumper": "^5.1"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/demidovich/d2-hydrator"
+        }
+    ],
     "minimum-stability": "dev",
     "prefer-stable": true
 }
