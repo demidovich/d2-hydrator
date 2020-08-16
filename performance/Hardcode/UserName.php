@@ -1,8 +1,6 @@
 <?php
 
-namespace Performance;
-
-use RuntimeException;
+namespace Performance\Hardcode;
 
 class UserName
 {

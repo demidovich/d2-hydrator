@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker exec -ti d2-data-mapper php /app/performance/Hardcode/performance.php

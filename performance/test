@@ -1,3 +1,0 @@
-#!/bin/bash
-
-docker exec -ti d2-hydrator php /app/performance/performance.php
