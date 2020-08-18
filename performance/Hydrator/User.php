@@ -1,6 +1,6 @@
 <?php
 
-namespace Performance;
+namespace Performance\Hydrator;
 
 use DateTimeImmutable;
 
