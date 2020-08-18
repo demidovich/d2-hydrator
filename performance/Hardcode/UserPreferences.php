@@ -2,9 +2,9 @@
 
 namespace Performance\Hardcode;
 
-use D2\DataMapper\Entity;
+use Performance\Hardcode\Entity;
 
-class UserPreferences extends Entity
+class UserPreferences implements Entity
 {
     private string $locale;
     private string $language;
@@ -13,7 +13,7 @@ class UserPreferences extends Entity
     private bool   $subscribe_news;
     private bool   $subscribe_messages;
 
-    public static function fromState($state)
+    public static function fromState($state): self
     {
         $self = new self;
 

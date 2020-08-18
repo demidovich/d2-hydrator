@@ -3,9 +3,9 @@
 namespace Performance\Hardcode;
 
 use DateTimeImmutable;
-use D2\DataMapper\Entity;
+use Performance\Hardcode\Entity;
 
-class User extends Entity
+class User implements Entity
 {
     private UserId $id;
     private UserName $name;
@@ -24,7 +24,7 @@ class User extends Entity
         
     }
 
-    public static function fromState($state)
+    public static function fromState($state): self
     {
         $self = new self;
 

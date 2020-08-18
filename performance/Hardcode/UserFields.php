@@ -2,9 +2,9 @@
 
 namespace Performance\Hardcode;
 
-use D2\DataMapper\Entity;
+use Performance\Hardcode\Entity;
 
-class UserFields extends Entity
+class UserFields implements Entity
 {
     private string $field0;
     private string $field1;
@@ -13,7 +13,7 @@ class UserFields extends Entity
     private string $field4;
     private string $field5;
 
-    public static function fromState($state)
+    public static function fromState($state): self
     {
         $self = new self;
 

@@ -2,9 +2,9 @@
 
 namespace Performance\Hardcode;
 
-use D2\DataMapper\Entity;
+use Performance\Hardcode\Entity;
 
-class UserAddress extends Entity
+class UserAddress implements Entity
 {
     private string  $country;
     private string  $city;
@@ -13,7 +13,7 @@ class UserAddress extends Entity
     private ?string $flat = null;
     private int     $zip_code;
 
-    public static function fromState($state)
+    public static function fromState($state): self
     {
         $self = new self;
 
