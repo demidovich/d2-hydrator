@@ -1,11 +1,11 @@
 <?php
 
 use D2\Hydrator\Hydrator;
-use Performance\User;
-use Performance\UserAddress;
-use Performance\UserPreferences;
+use Performance\Hydrator\User;
+use Performance\Hydrator\UserAddress;
+use Performance\Hydrator\UserPreferences;
 
-$autoload = __DIR__.'/../vendor/autoload.php';
+$autoload = __DIR__.'/../../vendor/autoload.php';
 
 if (! file_exists($autoload)) {
     throw new RuntimeException('Install composer dependencies to run test suite');
