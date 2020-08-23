@@ -14,10 +14,6 @@ class User implements Entity
     private UserPreferences $preferences;
     private DateTimeImmutable $created_at;
     private UserFields $fields;
-    private $field6;
-    private $field7;
-    private $field8;
-    private $field9;
 
     protected function init(): void
     {
