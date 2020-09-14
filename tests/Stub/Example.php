@@ -10,15 +10,15 @@ use Tests\Stub\ExampleAddress;
  * @property int            $primitive_id
  * @property string         $primitive_string
  * @property int            $nullable_primitive_id
- * @property ExampleAddress $nullable_address
+ * @property ExampleAddress $address
  */
 class Example
 {
-    private ExampleId       $id;
-    private int             $primitive_id;
-    private string          $primitive_string;
+    private  ExampleId      $id;
+    private  int            $primitive_id;
+    private  string         $primitive_string;
     private ?int            $nullable_primitive_id = null;
-    private ?ExampleAddress $nullable_address = null;
+    private  ExampleAddress $address;
 
     public function __get($name)
     {
