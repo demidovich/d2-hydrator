@@ -9,12 +9,23 @@ use RuntimeException;
 
 class Hydrator
 {
-    private $class;
+    private $instance;
     private $prefixes = [];
 
-    public function __construct(string $class)
+    public static function onClass(string $class): self
     {
-        $this->class = $class;
+        $self = new self;
+        $self->instance = new $class;
+
+        return $self;
+    }
+
+    public static function onInstance(object $instance): self
+    {
+        $self = new self;
+        $self->instance = $instance;
+
+        return $self;
     }
 
     public function addPrefix(string $prefix, string $class): void
@@ -24,7 +35,7 @@ class Hydrator
 
     public function hydrate(array $data)
     {
-        $instance    = new $this->class;
+        $instance    = $this->instance;
         $reflection  = new ReflectionClass($instance);
         $data       += $reflection->getDefaultProperties();
 
@@ -50,8 +61,9 @@ class Hydrator
             }
 
             else {
+                $class = get_class($this->instance);
                 throw new RuntimeException(
-                    "Error hydration \"{$this->class}\". " . 
+                    "Error hydration \"{$class}\". " . 
                     "The value for the attribute \"{$name}\" is missing. " .
                     "Check initialize data prefixes."
                 );
@@ -105,7 +117,7 @@ class Hydrator
             $data = $this->dataByPrefix($this->prefixes[$class], $data);
         }
 
-        return (new Hydrator($class))->hydrate($data);
+        return Hydrator::onClass($class)->hydrate($data);
     }
 
     private function dataByPrefix(string $prefix, array $allData): array
