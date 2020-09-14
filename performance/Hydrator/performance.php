@@ -47,7 +47,7 @@ $build = function() {
 
     // return Hydrator::hydrate(User::class, $dbRow);
 
-    $hydrator = new Hydrator(User::class);
+    $hydrator = Hydrator::onClass(User::class);
     $hydrator->addPrefix('address', UserAddress::class);
     $hydrator->addPrefix('preferences', UserPreferences::class);
 
