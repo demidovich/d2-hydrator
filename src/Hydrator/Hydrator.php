@@ -93,6 +93,10 @@ class Hydrator
             return;
         }
 
+        if (empty($value)) {
+            return;
+        }
+
         $value = new $type($value);
     }
 
