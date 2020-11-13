@@ -93,7 +93,7 @@ class Hydrator
             return;
         }
 
-        if (empty($value)) {
+        if ($value === null) {
             return;
         }
 
