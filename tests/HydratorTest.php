@@ -40,6 +40,7 @@ class CommandTest extends TestCase
 
         $this->assertEquals($data['primitive_id'], $entity->primitive_id);
         $this->assertEquals($data['primitive_string'], $entity->primitive_string);
+        $this->assertEquals(null, $entity->nullable_datetime);
 
         $this->assertInstanceOf(ExampleAddress::class, $entity->address);
         $this->assertEquals($data['address_city'], $entity->address->city());
