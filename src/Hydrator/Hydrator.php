@@ -84,16 +84,16 @@ class Hydrator
     {
         $type = $reflectionType->getName();
 
+        if ($value === null) {
+            return;
+        }
+
         if ($reflectionType->isBuiltin()) {
             settype($value, $type);
             return;
         }
 
         if ($value instanceof $type) {
-            return;
-        }
-
-        if ($value === null) {
             return;
         }
 
