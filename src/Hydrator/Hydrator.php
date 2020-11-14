@@ -2,6 +2,8 @@
 
 namespace D2\Hydrator;
 
+use D2\DataMapper\Contracts\Jsonable;
+use D2\DataMapper\Contracts\Stateable;
 use ReflectionClass;
 use ReflectionNamedType;
 use ReflectionProperty;
@@ -68,9 +70,11 @@ class Hydrator
                     "Check initialize data prefixes."
                 );
             }
+            
+            $test = ($name == 'preferences') ? true : false;
 
             if ($property->hasType()) {
-                $this->cast($value, $property->getType());
+                $this->cast($value, $property->getType(), $test);
             }
 
             $property->setAccessible(true);
@@ -80,9 +84,13 @@ class Hydrator
         return $instance;
     }
 
-    private function cast(&$value, ReflectionNamedType $reflectionType): void
+    private function cast(&$value, ReflectionNamedType $reflectionType, $test = false): void
     {
         $type = $reflectionType->getName();
+
+        if ($value === null) {
+            return;
+        }
 
         if ($reflectionType->isBuiltin()) {
             settype($value, $type);
@@ -90,10 +98,6 @@ class Hydrator
         }
 
         if ($value instanceof $type) {
-            return;
-        }
-
-        if ($value === null) {
             return;
         }
 
